@@ -1,0 +1,39 @@
+import requests
+from PIL import Image
+import numpy as np
+
+
+# 1
+response = requests.get('https://s1.1zoom.me/big3/937/Bridges_USA_Golden_Gate_Bridge_California_San_601713_3872x2592.jpg')
+print(response.text)
+with open("map.png", "wb") as file:
+    file.write(response.content)
+
+# requests.get - отправляет запрос на получение данных
+# response.content - получим содержимое запроса в байтах
+# response.text - получим содержимое запроса UTF-8
+
+
+# 2
+filename = "map.png"
+
+img = Image.open(filename)
+print(img.format)
+print(img.size)
+print(img.mode)
+# изменяет размер
+new_image = img.resize((300, 200))
+# показывает изображение
+# new_image.show()
+# сохраняет в новом формате
+new_image.save('map1.png')
+
+# создается массив
+square = np.zeros((600, 600))
+# устанавливается значение набора пикселей в центре массива
+square[200:400, 200:400] = 255
+# создается изображение из объекта массива
+square_img = Image.fromarray(square)
+
+# square_img.show()
+
