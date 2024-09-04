@@ -6,15 +6,19 @@ def introspection_info(obj):
     meth = []
     attrs = []
     att = dir(obj)
+
+    def methods():
+        return methods.__dir__()
+
     for j in att:
-        if hasattr(builtins, j):
-            attrs.append(j)
-        else:
+        if j in methods.__dir__():
             meth.append(j)
+        else:
+            attrs.append(j)
 
     module = obj.__class__.__module__
 
-    dictionary = {'type': obj_type, 'attributes': attrs, 'methods': meth, 'module': module}
+    dictionary = {'type': obj_type, 'attributes': attrs, 'methods': methods(), 'module': module}
     return dictionary
 
 
