@@ -1,24 +1,13 @@
-import builtins
-
-
 def introspection_info(obj):
     obj_type = type(obj).__name__
-    meth = []
-    attrs = []
-    att = dir(obj)
+    obj_dir = dir(obj)
 
-    def methods():
-        return methods.__dir__()
-
-    for j in att:
-        if j in methods.__dir__():
-            meth.append(j)
-        else:
-            attrs.append(j)
+    attributes = [attr for attr in obj_dir if not callable(getattr(obj, attr))]
+    methods = [meth for meth in obj_dir if callable(getattr(obj, meth))]
 
     module = obj.__class__.__module__
 
-    dictionary = {'type': obj_type, 'attributes': attrs, 'methods': methods(), 'module': module}
+    dictionary = {'type': obj_type, 'attributes': attributes, 'methods': methods, 'module': module}
     return dictionary
 
 
